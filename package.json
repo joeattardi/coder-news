@@ -1,0 +1,19 @@
+{
+  "name": "coder-news",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build-css": "node-sass --include-path scss scss/main.scss public/css/main.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joe Attardi <joe@attardi.net> (http://www.thinksincode.com)",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^2.5.2",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "node-sass": "^3.12.4"
+  }
+}

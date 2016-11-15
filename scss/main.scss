@@ -1,0 +1,53 @@
+@import 'submit';
+
+$button-color: #83B4AF;
+$header-color: #8489B5;
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+header {
+  background-color: $header-color;
+  padding: 1em;
+
+  h1 {
+    margin: 0;
+
+    a {
+      text-decoration: none;
+      color: #FFFFFF;
+    }
+  }
+}
+
+.content {
+  padding: 1em;
+}
+
+.form-row {
+  margin: 0.5em;
+
+  label {
+    display: inline-block;
+    width: 200px;
+  }
+}
+
+button {
+  background-color: $button-color;
+  border-radius: 3px;
+  border: 1px solid darken($button-color, 10%);
+  border-bottom-width: 2px;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #FFFFFF;
+
+  &:hover {
+    background-color: lighten($button-color, 10%);
+    border-color: $button-color;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+}
