@@ -10,7 +10,8 @@ body {
 
 header {
   background-color: $header-color;
-  padding: 1em;
+  border-bottom: 5px solid darken($header-color, 10%);
+  padding: 0.5em;
 
   h1 {
     margin: 0;
