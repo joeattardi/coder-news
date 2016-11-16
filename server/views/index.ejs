@@ -13,7 +13,7 @@
         <% stories.forEach(story => { %>
           <div class="story">
             <h4><a target="_blank" href="<%= story.url %>"><%= story.title %></a></h4>
-            <span class="info">(techcrunch.com)</span>
+            <span class="info">(<%= story.domain %>)</span>
             <div class="info"><%= moment(story.submitted).fromNow() %></div>
           </div>
         <% }) %>

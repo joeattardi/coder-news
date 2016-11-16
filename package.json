@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-css": "node-sass --include-path scss scss/main.scss public/css/main.css",
-    "watch-css": "nodemon --exec 'node-sass --include-path scss scss/main.scss public/css/main.css' -e scss",
+    "build-css": "node-sass --include-path scss client/scss/main.scss client/public/css/main.css",
+    "watch-css": "nodemon --exec 'node-sass --include-path scss client/scss/main.scss client/public/css/main.css' -e scss",
     "start": "nodemon -e js,ejs index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const moment = require('moment');
+const url = require('url');
 
 const Story = require('./models/Story');
 
@@ -12,7 +13,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static('./public'));
+app.use(express.static('../client/public'));
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
@@ -32,6 +33,7 @@ app.post('/submit', (req, res) => {
   const story = new Story({
     title: req.body.title,
     url: req.body.url,
+    domain: url.parse(req.body.url).hostname,
     submitted: new Date()
   });
 
