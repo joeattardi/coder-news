@@ -13,8 +13,8 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static('../client/public'));
-app.set('views', './views');
+app.use(express.static('./client/public'));
+app.set('views', './server/views');
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
