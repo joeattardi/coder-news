@@ -1,2 +1,4 @@
 node_modules
-public/css
+client/public/css
+client/public/js
+
