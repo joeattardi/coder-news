@@ -1,5 +1,6 @@
 @import 'submit';
 
+$link-color: #83A1B4;
 $button-color: #83B4AF;
 $header-color: #8489B5;
 
@@ -33,6 +34,29 @@ header {
   label {
     display: inline-block;
     width: 200px;
+  }
+}
+
+.story {
+  margin: 0.5rem;
+
+  h4 {
+    margin: 0;
+    display: inline-block;
+
+    a {
+      color: $link-color;
+      text-decoration: none;
+
+      &:hover {
+        color: lighten($link-color, 10%);
+      }
+    }
+  }
+
+  .info {
+    font-size: 0.8em;
+    color: #999999; 
   }
 }
 

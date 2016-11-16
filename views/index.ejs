@@ -6,8 +6,18 @@
   </head>
   <body>
     <%- include('partials/header') %>
-    <div class="content" id="#home-page">
+    <div class="content" id="home-page">
       <button onclick="location.href='/submit'">Submit a link</button>
+
+      <div id="stories">
+        <% stories.forEach(story => { %>
+          <div class="story">
+            <h4><a target="_blank" href="<%= story.url %>"><%= story.title %></a></h4>
+            <span class="info">(techcrunch.com)</span>
+            <div class="info"><%= moment(story.submitted).fromNow() %></div>
+          </div>
+        <% }) %>
+      </div>
     </div>
   </body>
 </html>

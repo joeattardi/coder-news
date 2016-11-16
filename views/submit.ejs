@@ -9,14 +9,14 @@
     <%- include('partials/header') %>
     <div class="content" id="submit-page">
       <h2>Submit a link</h2>
-      <form id="submit-form">
+      <form action="/submit" method="POST" id="submit-form">
         <div class="form-row">
           <label for="title">Title</label>
-          <input type="text" id="title" size="60" autofocus />
+          <input type="text" name="title" id="title" size="60" autofocus />
         </div>
         <div class="form-row">
           <label for="url">URL</label>
-          <input type="text" id="url" size="60" />
+          <input type="text" name="url" id="url" size="60" />
         </div>
         <button type="submit">Submit</button>
         <button type="button" onclick="location.href='/'">Cancel</button>
