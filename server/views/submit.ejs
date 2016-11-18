@@ -8,18 +8,21 @@
   <body>
     <%- include('partials/header') %>
     <div class="content" id="submit-page">
-      <% if (validationErrors) { %>
-        <%= validationErrors %>
-      <% } %>
       <h2>Submit a link</h2>
       <form action="/submit" method="POST" id="submit-form">
         <div class="form-row">
           <label for="title">Title</label>
           <input type="text" name="title" id="title" size="60" autofocus />
+          <% if (validationErrors && validationErrors.title) { %>
+            <span class="validation-error"><%= validationErrors.title %></span>
+          <% } %>
         </div>
         <div class="form-row">
           <label for="url">URL</label>
           <input type="text" name="url" id="url" size="60" />
+          <% if (validationErrors && validationErrors.url) { %>
+            <span class="validation-error"><%= validationErrors.url %></span>
+          <% } %>
         </div>
         <button type="submit">Submit</button>
         <button type="button" onclick="location.href='/'">Cancel</button>

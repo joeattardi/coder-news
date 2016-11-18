@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const expressValidator = require('express-validator');
 const url = require('url');
 
 const Story = require('./models/Story');
@@ -12,7 +13,7 @@ mongoose.connect('mongodb://localhost/codernews');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(expressValidator());
 app.use(express.static('./client/public'));
 app.set('views', './server/views');
 app.set('view engine', 'ejs');
