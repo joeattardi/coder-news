@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const moment = require('moment');
 const url = require('url');
 
 const Story = require('./models/Story');
+const storyController = require('./controllers/storyController');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/codernews');
@@ -19,30 +19,13 @@ app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
   Story.find({}).then(stories => {
-    res.render('index', { stories, moment });
+    res.render('index', { stories });
   }).catch(err => {
     res.status(500).send(); 
   });
 });
 
-app.get('/submit', (req, res) => {
-  res.render('submit');
-});
-
-app.post('/submit', (req, res) => {
-  const story = new Story({
-    title: req.body.title,
-    url: req.body.url,
-    domain: url.parse(req.body.url).hostname,
-    submitted: new Date()
-  });
-
-  story.save().then(document => {
-    res.redirect('/');
-  }).catch(err => {
-    res.status(500).send(); 
-  });
-
-});
+app.get('/submit', storyController.viewSubmitPage);
+app.post('/submit', storyController.submitStory);
 
 app.listen(3000);

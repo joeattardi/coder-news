@@ -8,6 +8,9 @@
   <body>
     <%- include('partials/header') %>
     <div class="content" id="submit-page">
+      <% if (validationErrors) { %>
+        <%= validationErrors %>
+      <% } %>
       <h2>Submit a link</h2>
       <form action="/submit" method="POST" id="submit-form">
         <div class="form-row">

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('partials/head') %>
+    <title>Coder News: Error</title>
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    <div class="content" id="error-page">
+      <h1>Internal Server Error</h1>
+      <p>An unexpected error has occurred. Please try again later.</p>
+      <h2>Details</h2>
+      <pre><%= error.stack %></pre>
+    </div>
+  </body>
+</html>
