@@ -3,6 +3,7 @@
 $link-color: #83A1B4;
 $button-color: #83B4AF;
 $header-color: #8489B5;
+$error-color: #A30000;
 
 body {
   font-family: Arial, sans-serif;
@@ -36,8 +37,14 @@ header {
     width: 200px;
   }
 
+  div.error {
+    color: $error-color;
+    margin-left: 200px;
+    font-size: 0.8em;
+  }
+
   .validation-error {
-    color: red;
+    color: $error-color;
   }
 }
 
@@ -61,6 +68,12 @@ header {
   .info {
     font-size: 0.8em;
     color: #999999; 
+  }
+}
+
+input {
+  &.error {
+    border: 2px solid $error-color;
   }
 }
 
