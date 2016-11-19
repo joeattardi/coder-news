@@ -21,6 +21,7 @@
         <div class="form-row">
           <label for="url">URL</label>
           <input type="text" name="url" id="url" size="60" required />
+          <button id="suggest-title" disabled>Suggest Title</button>
           <% if (validationErrors && validationErrors.url) { %>
             <span class="validation-error"><%= validationErrors.url %></span>
           <% } %>

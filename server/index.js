@@ -6,6 +6,7 @@ const url = require('url');
 
 const Story = require('./models/Story');
 const storyController = require('./controllers/storyController');
+const ajaxController = require('./controllers/ajaxController');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/codernews');
@@ -28,5 +29,6 @@ app.get('/', (req, res) => {
 
 app.get('/submit', storyController.viewSubmitPage);
 app.post('/submit', storyController.submitStory);
+app.get('/extractTitle', ajaxController.extractTitle); 
 
 app.listen(3000);

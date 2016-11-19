@@ -92,4 +92,13 @@ button {
     border-color: $button-color;
     transition: background-color 0.2s, border-color 0.2s;
   }
+
+  &:disabled {
+    opacity: 0.5;
+
+    &:hover {
+      background-color: $button-color;
+      cursor: not-allowed;
+    }
+  }
 }
