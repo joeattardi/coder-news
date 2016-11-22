@@ -11,10 +11,9 @@ exports.submitStory = function submitStory(req, res) {
   req.checkBody('title', 'Title is required.').notEmpty();
   req.checkBody('url', 'A valid URL is required.').notEmpty().isURL();
 
-  const validationErrors = req.validationErrors();
+  const validationErrors = req.validationErrors(true);
   if (validationErrors) {
-    const errorsByParam = utils.getErrorsByParam(validationErrors);
-    return res.render('submit', { validationErrors: errorsByParam });
+    return res.render('submit', { validationErrors });
   }
 
   const story = new Story({

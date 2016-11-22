@@ -15,7 +15,7 @@
           <label for="title">Title</label>
           <input type="text" name="title" id="title" size="60" autofocus required />
           <% if (validationErrors && validationErrors.title) { %>
-            <span class="validation-error"><%= validationErrors.title %></span>
+            <span class="validation-error"><%= validationErrors.title.msg %></span>
           <% } %>
         </div>
         <div class="form-row">
@@ -23,7 +23,7 @@
           <input type="text" name="url" id="url" size="60" required />
           <button type="button" id="suggest-title" disabled>Suggest Title</button>
           <% if (validationErrors && validationErrors.url) { %>
-            <span class="validation-error"><%= validationErrors.url %></span>
+            <span class="validation-error"><%= validationErrors.url.msg %></span>
           <% } %>
         </div>
         <button type="submit">Submit</button>
