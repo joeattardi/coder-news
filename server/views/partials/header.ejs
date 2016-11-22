@@ -1,4 +1,12 @@
 <header>
   <h1><a href="/">Coder News</a></h1>
+
+  <% if (locals.user) { %>
+    <span class="username"><%= user.username %></span>
+    <button onclick="location.href='/logout'">Log out</button>
+  <% } else { %>
+    <button onclick="location.href='/signup'">Sign up</button>
+    <button>Log in</button>
+  <% } %>
 </header>
 

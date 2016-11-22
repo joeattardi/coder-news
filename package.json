@@ -13,9 +13,11 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.15.2",
+    "bcryptjs": "^2.3.0",
     "body-parser": "^1.15.2",
     "ejs": "^2.5.2",
     "express": "^4.14.0",
+    "express-session": "^1.14.2",
     "express-validator": "^2.21.0",
     "jquery": "^2.2.4",
     "jquery-validation": "^1.15.1",

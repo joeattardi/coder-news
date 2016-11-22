@@ -7,6 +7,9 @@
   <body>
     <%- include('partials/header') %>
     <div class="content" id="home-page">
+      <% if (message) { %>
+        <div class="message"><%= message %></div>
+      <% } %>
       <button onclick="location.href='/submit'">Submit a link</button>
 
       <div id="stories">

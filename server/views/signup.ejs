@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('partials/head') %>
+    <script type="text/javascript" src="/js/signupPage.js"></script>
+    <title>Coder News: Sign Up</title>
+  </head>
+  <body>
+    <header>
+      <h1><a href="/">Coder News</a></h1>
+    </header>
+
+    <div class="content" id="signup-page">
+      <h2>Sign Up</h2>
+      <form action="/signup" method="POST" id="signup-form">
+        <div class="form-row">
+          <label for="username">Username</label>
+          <input type="text" name="username" id="username" size="40" autofocus required />
+          <% if (locals.validationErrors && validationErrors.username) { %>
+            <span class="validation-error"><%= validationErrors.username.msg %></span>
+          <% } %>
+          <div class="error" style="display: none;" id="username-taken-warning">That username is already taken.</div>
+        </div>
+        <div class="form-row">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" size="40" required />
+          <% if (locals.validationErrors && validationErrors.password) { %>
+            <span class="validation-error"><%= validationErrors.password.msg %></span>
+          <% } %>
+        </div>
+        <div class="form-row">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" name="confirmPassword" id="confirm-password" size="40" />
+          <% if (locals.validationErrors && validationErrors.confirmPassword) { %>
+            <span class="validation-error"><%= validationErrors.confirmPassword.msg %></span>
+          <% } %>
+        </div>
+        <span style="margin-right: 200px;"></span>
+        <button type="submit" id="submit-button">Sign Up</button>
+        <button type="button" onclick="location.href='/'">Cancel</button>
+      </form>
+    </div>
+  </body>
+</html>

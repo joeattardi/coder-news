@@ -4,11 +4,16 @@ const moment = require('moment');
 const storySchema = new mongoose.Schema({
   title: {
     type: String,
-    required: [true, 'Title is required']
+    required: true
   },
   url: {
     type: String,
-    required: [true, 'URL is required']
+    required: true
+  },
+  submitter: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'User',
+    required: true
   },
   domain: String,
   votes: Number,
