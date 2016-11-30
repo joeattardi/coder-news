@@ -1,7 +1,39 @@
+const bcrypt = require('bcryptjs');
+
 const User = require('../models/User');
 
 exports.viewSignUpPage = function viewSignUpPage(req, res) {
   res.render('signup');
+};
+
+exports.logout = function logout(req, res) {
+  delete req.session.user;
+  req.session.message = 'You have been logged out.';
+  res.redirect('/');
+};
+
+exports.viewLoginPage = function viewLoginPage(req, res) {
+  res.render('login');
+};
+
+exports.login = function login(req, res) {
+  req.checkBody('username', 'Username is required.').notEmpty();
+  req.checkBody('password', 'Password is required.').notEmpty();
+
+  const validationErrors = req.validationErrors(true);
+  if (validationErrors) {
+    return res.render('login', { validationErrors });
+  }
+
+  User.findOne({ username: req.body.username }).then(user => {
+    if (bcrypt.compareSync(req.body.password, user.password)) {
+      req.session.user = user;
+      req.session.message = 'You have successfully logged in.';
+      res.redirect('/');
+    } else {
+      res.render('login', { loginError: 'Invalid username or password.' });
+    }
+  });
 };
 
 exports.signup = function signup(req, res) {

@@ -3,7 +3,8 @@ const webpack = require('webpack');
 module.exports = {
   entry: {
     submitPage: './client/js/submitPage.js',
-    signupPage: './client/js/signupPage.js'
+    signupPage: './client/js/signupPage.js',
+    loginPage: './client/js/loginPage.js'
   },
 
   output: {

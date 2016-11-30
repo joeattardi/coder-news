@@ -1,13 +1,20 @@
 const url = require('url');
 
-const utils = require('../utils');
 const Story = require('../models/Story');
 
 exports.viewSubmitPage = function viewSubmitPage(req, res) {
-  res.render('submit', { validationErrors: null });
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+
+  res.render('submit', { validationErrors: null, user: req.session.user });
 };
 
 exports.submitStory = function submitStory(req, res) {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+
   req.checkBody('title', 'Title is required.').notEmpty();
   req.checkBody('url', 'A valid URL is required.').notEmpty().isURL();
 

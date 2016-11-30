@@ -4,7 +4,7 @@ $link-color: #83A1B4;
 $button-color: #83B4AF;
 $header-color: #8489B5;
 $error-color: #A30000;
-$info-color: #E0FFFF;
+$info-color: #E6F6Fb;
 
 body {
   font-family: Arial, sans-serif;
@@ -44,6 +44,7 @@ header {
   label {
     display: inline-block;
     width: 200px;
+    margin-right: 0.5rem;
     text-align: right;
   }
 
@@ -83,17 +84,24 @@ header {
 
 input {
   &.error {
-    border: 2px solid $error-color;
+    border: 1px solid $error-color;
   }
 }
 
 .message {
   background-color: $info-color;
   border: 1px solid darken($info-color, 10%);
+  border-left-width: 5px;
   border-radius: 5px;
   padding: 0.5em;
   font-size: 0.8em;
+  color: darken($info-color, 40%);
 
+  &.message-error {
+    background-color: lighten($error-color, 60%);
+    border-color: $error-color;
+    color: $error-color; 
+  }
 }
 
 button {
@@ -120,5 +128,25 @@ button {
       background-color: $button-color;
       cursor: not-allowed;
     }
+  }
+}
+
+#signup-form {
+  label {
+    width: 9rem;
+  }
+
+  div.error {
+    margin-left: 9.5rem;
+  }
+}
+
+#login-form {
+  label {
+    width: 5rem;
+  }
+
+  div.error {
+    margin-left: 5.5rem;
   }
 }

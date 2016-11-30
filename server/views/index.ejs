@@ -10,7 +10,10 @@
       <% if (message) { %>
         <div class="message"><%= message %></div>
       <% } %>
-      <button onclick="location.href='/submit'">Submit a link</button>
+
+      <% if (locals.user) { %>
+        <button onclick="location.href='/submit'">Submit a link</button>
+      <% } %>
 
       <div id="stories">
         <% stories.forEach(story => { %>

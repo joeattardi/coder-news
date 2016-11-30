@@ -51,5 +51,8 @@ app.get('/extractTitle', ajaxController.extractTitle);
 
 app.get('/signup', userController.viewSignUpPage);
 app.post('/signup', userController.signup);
+app.get('/login', userController.viewLoginPage);
+app.post('/login', userController.login);
+app.get('/logout', userController.logout);
 
 app.listen(3000);

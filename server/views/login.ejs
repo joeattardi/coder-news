@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('partials/head') %>
+    <title>Coder News: Log In</title>
+    <script src="/js/loginPage.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1><a href="/">Coder News</a></h1>
+    </header>
+
+    <div class="content" id="login-page">
+      <% if (locals.loginError) { %>
+        <div class="message message-error"><%= locals.loginError %></div>
+      <% } %>
+      <h2>Log In</h2>
+      <form action="/login" method="POST" id="login-form">
+        <div class="form-row">
+          <label for="username">Username</label>
+          <input type="text" name="username" id="username" size="40" autofocus required />
+          <% if (locals.validationErrors && validationErrors.username) { %>
+            <span class="validation-error"><%= validationErrors.username.msg %></span>
+          <% } %>
+        </div>
+        <div class="form-row">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" size="40" required />
+          <% if (locals.validationErrors && validationErrors.password) { %>
+            <span class="validation-error"><%= validationErrors.password.msg %></span>
+          <% } %>
+        </div>
+        <div class="form-row">
+          <span style="margin-right: 6em;"></span>
+          <button type="submit" id="submit-button">Log In</button>
+        </div>
+      </form>
+    </div>
+</html>
