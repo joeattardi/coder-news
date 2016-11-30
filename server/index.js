@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
   delete req.session.message;
   const user = req.session.user;
 
-  Story.find({}).then(stories => {
+  Story.find({}).populate('submitter').then(stories => {
     res.render('index', { 
       stories,
       message,

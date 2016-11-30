@@ -27,7 +27,8 @@ exports.submitStory = function submitStory(req, res) {
     title: req.body.title,
     url: req.body.url,
     domain: url.parse(req.body.url).hostname,
-    submitted: new Date()
+    submitted: new Date(),
+    submitter: req.session.user
   });
 
   story.save().then(document => {
