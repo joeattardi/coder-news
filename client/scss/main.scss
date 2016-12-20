@@ -107,18 +107,17 @@ input {
 button {
   background-color: $button-color;
   border-radius: 3px;
-  border: 1px solid darken($button-color, 10%);
-  border-bottom-width: 2px;
+  border: 1px solid darken($button-color, 5%);
   padding: 0.25rem 0.5rem;
   margin: 0.5em;
-  font-size: 1rem;
+  font-size: 0.8rem;
   cursor: pointer;
   color: #FFFFFF;
+  transition: background-color 0.2s, border-color 0.2s;
 
   &:hover {
     background-color: lighten($button-color, 10%);
     border-color: $button-color;
-    transition: background-color 0.2s, border-color 0.2s;
   }
 
   &:disabled {
@@ -137,7 +136,7 @@ button {
   }
 
   div.error {
-    margin-left: 9.5rem;
+    margin-left: 9.8rem;
   }
 }
 
@@ -147,6 +146,6 @@ button {
   }
 
   div.error {
-    margin-left: 5.5rem;
+    margin-left: 5.8rem;
   }
 }
