@@ -3,10 +3,11 @@
 
   <% if (locals.user) { %>
     <span class="username"><%= user.username %></span>
-    <button onclick="location.href='/logout'">Log out</button>
+    <button onclick="location.href='/submit'"><i class="fa fa-plus"></i> Submit a link</button>
+    <button onclick="location.href='/logout'"><i class="fa fa-sign-out"></i> Log out</button>
   <% } else { %>
     <button onclick="location.href='/signup'">Sign up</button>
-    <button onclick="location.href='/login'">Log in</button>
+    <button onclick="location.href='/login'"><i class="fa fa-sign-in"></i> Log in</button>
   <% } %>
 </header>
 

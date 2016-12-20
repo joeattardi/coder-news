@@ -48,6 +48,7 @@ app.post('/submit', storyController.submitStory);
 
 app.get('/usernameExists', ajaxController.usernameExists);
 app.get('/extractTitle', ajaxController.extractTitle); 
+app.post('/vote', ajaxController.vote);
 
 app.get('/signup', userController.viewSignUpPage);
 app.post('/signup', userController.signup);

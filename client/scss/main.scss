@@ -59,26 +59,53 @@ header {
   }
 }
 
-.story {
-  margin: 0.5rem;
+.story-container {
+  display: flex;
 
-  h4 {
-    margin: 0;
-    display: inline-block;
+  .story {
+    margin: 0.5rem;
 
-    a {
-      color: $link-color;
-      text-decoration: none;
+    h4 {
+      margin: 0;
+      display: inline-block;
 
-      &:hover {
-        color: lighten($link-color, 10%);
+      a {
+        color: $link-color;
+        text-decoration: none;
+
+        &:hover {
+          color: lighten($link-color, 10%);
+        }
       }
+    }
+
+    .info {
+      font-size: 0.8em;
+      color: #999999; 
     }
   }
 
-  .info {
-    font-size: 0.8em;
-    color: #999999; 
+  .story-votes-container {
+    align-self: center;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+
+    .story-votes {
+      text-align: center;
+    }
+
+    .upvote, .downvote {
+      cursor: pointer;
+    }
+
+    .upvote.active {
+      color: orangered;
+    }
+
+    .downvote.active {
+      color: purple;
+    }
   }
 }
 

@@ -16,7 +16,18 @@ const storySchema = new mongoose.Schema({
     required: true
   },
   domain: String,
-  votes: Number,
+  upvoters: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'User'
+  },
+  downvoters: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'User'
+  },
+  votes: {
+    type: Number,
+    default: 0
+  },
   submitted: Date
 });
 

@@ -3,6 +3,7 @@
   <head>
     <%- include('partials/head') %>
     <title>Coder News</title>
+    <script src="/js/voting.js"></script>
   </head>
   <body>
     <%- include('partials/header') %>
@@ -10,18 +11,28 @@
       <% if (message) { %>
         <div class="message"><%= message %></div>
       <% } %>
-
-      <% if (locals.user) { %>
-        <button onclick="location.href='/submit'">Submit a link</button>
-      <% } %>
-
       <div id="stories">
         <% stories.forEach(story => { %>
-          <div class="story">
-            <h4><a target="_blank" href="<%= story.url %>"><%= story.title %></a></h4>
-            <span class="info">(<%= story.domain %>)</span>
-            <div class="info">
-              submitted by <%= story.submitter.username %> <span title="<%= story.submitted %>"><%= story.relativeSubmitted() %></span>
+          <div class="story-container" data-story-id="<%= story._id %>">
+            <div class="story-votes-container">
+              <% if (locals.user) { %>
+              <div class="vote-button upvote <% if (locals.user && story.upvoters.indexOf(user._id) >= 0) {%>active<% } %>">
+                <i class="fa fa-chevron-up"></i>
+              </div>
+              <% } %>
+              <div class="story-votes"><%= story.votes %></div>
+              <% if (locals.user) { %>
+              <div class="vote-button downvote <% if (locals.user && story.downvoters.indexOf(user._id) >= 0) {%>active<% } %>">
+                <i class="fa fa-chevron-down"></i>
+              </div>
+              <% } %>
+            </div>
+            <div class="story">
+              <h4><a target="_blank" href="<%= story.url %>"><%= story.title %></a></h4>
+              <span class="info">(<%= story.domain %>)</span>
+              <div class="info">
+                submitted by <%= story.submitter.username %> <span title="<%= story.submitted %>"><%= story.relativeSubmitted() %></span>
+              </div>
             </div>
           </div>
         <% }) %>

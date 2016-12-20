@@ -4,7 +4,8 @@ module.exports = {
   entry: {
     submitPage: './client/js/submitPage.js',
     signupPage: './client/js/signupPage.js',
-    loginPage: './client/js/loginPage.js'
+    loginPage: './client/js/loginPage.js',
+    voting: './client/js/voting.js'
   },
 
   output: {
