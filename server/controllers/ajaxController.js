@@ -3,7 +3,7 @@ const axios = require('axios');
 const User = require('../models/User');
 const Story = require('../models/Story');
 
-const TITLE_REGEX = /<title>(.*)<\/title>/;
+const TITLE_REGEX = /<title>(.*)<\/title>/i;
 
 exports.vote = function upvote(req, res) {
   if (!req.session.user) {
@@ -62,7 +62,7 @@ exports.extractTitle = function extractTitle(req, res) {
         title: matcher[1]
       });
     } else {
-      res.status(401).json({
+      res.status(400).json({
         error: 'No title found'
       });
     }
