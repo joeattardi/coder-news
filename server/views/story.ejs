@@ -10,14 +10,16 @@
     <div class="content" id="comments-page">
       <%- include('partials/story', { story: story }) %>
 
-      <form id="commentForm">
-        <div class="form-row">
-          <textarea id="comment" name="comment" rows="6" cols="60"></textarea>
-        </div>
-        <div class="form-row">
-          <button>Add comment</button>
-        </div>
-      </form>
+      <% if (locals.user) { %>
+        <form id="commentForm">
+          <div class="form-row">
+            <textarea id="comment" name="comment" rows="6" cols="60"></textarea>
+          </div>
+          <div class="form-row">
+            <button>Add comment</button>
+          </div>
+        </form>
+      <% } %>
     </div>
   </body>
 </html>
