@@ -9,6 +9,7 @@ const Story = require('./models/Story');
 const storyController = require('./controllers/storyController');
 const userController = require('./controllers/userController');
 const ajaxController = require('./controllers/ajaxController');
+const scoreUpdater = require('./score-updater');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/codernews');
@@ -32,7 +33,7 @@ app.get('/', (req, res) => {
   delete req.session.message;
   const user = req.session.user;
 
-  Story.find({}).sort([['submitted', 'descending']]).populate('submitter').then(stories => {
+  Story.find({}).sort([['score', 'descending']]).populate('submitter').then(stories => {
     res.render('index', { 
       stories,
       message,
@@ -56,5 +57,8 @@ app.post('/signup', userController.signup);
 app.get('/login', userController.viewLoginPage);
 app.post('/login', userController.login);
 app.get('/logout', userController.logout);
+
+scoreUpdater.updateAllScores();
+setInterval(scoreUpdater.updateAllScores, 1000 * 60 * 5);
 
 app.listen(3000);

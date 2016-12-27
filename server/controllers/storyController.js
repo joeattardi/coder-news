@@ -1,6 +1,7 @@
 const url = require('url');
 
 const Story = require('../models/Story');
+const scoreUpdater = require('../score-updater');
 
 exports.viewSubmitPage = function viewSubmitPage(req, res) {
   if (!req.session.user) {
@@ -50,6 +51,8 @@ exports.submitStory = function submitStory(req, res) {
       req.session.user
     ]
   });
+
+  scoreUpdater.updateScore(story);
 
   story.save().then(document => {
     res.redirect('/');
