@@ -53,7 +53,9 @@ exports.usernameExists = function usernameExists(req, res) {
 }
 
 exports.extractTitle = function extractTitle(req, res) {
-  axios.get(req.query.url).then(result => {
+  axios.get(req.query.url, {
+    headers: { 'Accept': 'text/html' }
+  }).then(result => {
     const matcher = TITLE_REGEX.exec(result.data);
     if (matcher) {
       res.json({
