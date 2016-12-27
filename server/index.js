@@ -11,6 +11,8 @@ const userController = require('./controllers/userController');
 const ajaxController = require('./controllers/ajaxController');
 const scoreUpdater = require('./score-updater');
 
+const ITEMS_PER_PAGE = 25;
+
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/codernews');
 
@@ -33,15 +35,29 @@ app.get('/', (req, res) => {
   delete req.session.message;
   const user = req.session.user;
 
-  Story.find({}).sort([['score', 'descending']]).populate('submitter').then(stories => {
-    res.render('index', { 
-      stories,
-      message,
-      user
+  const start = parseInt(req.query.start || '0');
+  let total;
+
+  Story.count({}).then(count => {
+    total = count;
+    return Story.find({})
+      .skip(start)
+      .limit(ITEMS_PER_PAGE)
+      .sort([['score', 'descending']])
+      .populate('submitter')
+    }).then(stories => {
+        Story.count({})
+        res.render('index', {
+          stories,
+          message,
+          user,
+          start,
+          total,
+          ITEMS_PER_PAGE
+        });
+    }).catch(err => {
+      res.status(500).render('error', { error });
     });
-  }).catch(err => {
-    res.status(500).render('error', { error });
-  });
 });
 
 app.get('/submit', storyController.viewSubmitPage);
