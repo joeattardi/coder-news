@@ -10,6 +10,22 @@ exports.viewSubmitPage = function viewSubmitPage(req, res) {
   res.render('submit', { validationErrors: null, user: req.session.user });
 };
 
+exports.viewStory = function viewStory(req, res) {
+  Story.findById(req.params.storyId).populate('submitter').then(story => {
+    if (story) {
+      res.render('story', { story, user: req.session.user });
+    } else {
+      res.status(404).render('notFound');
+    }
+  }).catch(err => {
+    if (err.name === 'CastError') {
+      res.status(404).render('notFound');
+    } else {
+      res.status(500).render('error', { error: err });
+    }
+  });
+};
+
 exports.submitStory = function submitStory(req, res) {
   if (!req.session.user) {
     return res.redirect('/login');

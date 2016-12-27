@@ -6,9 +6,8 @@ function vote($button, $storyContainer, direction) {
   return $.ajax({
     method: 'POST',
     url: `/vote?direction=${direction}&_id=${storyId}`
-  }).then(function (result) {
+  }).then(result => {
     $storyContainer.find('.story-votes').html(result.votes); 
-    $button.toggleClass('active');
   });
 }
 
@@ -16,7 +15,9 @@ function upvote() {
   const $button = $(this);
   const $storyContainer = $button.closest('.story-container');
   vote($button, $storyContainer, 1).then(() => {
-    $storyContainer.find('.downvote').removeClass('active');
+    $storyContainer.find('.story-votes-container')
+      .removeClass('downvote')
+      .toggleClass('upvote');
   });
 }
 
@@ -24,11 +25,13 @@ function downvote() {
   const $button = $(this);
   const $storyContainer = $button.closest('.story-container');
   vote($button, $storyContainer, -1).then(() => {
-    $storyContainer.find('.upvote').removeClass('active');
+    $storyContainer.find('.story-votes-container')
+      .removeClass('upvote')
+      .toggleClass('downvote');
   });
 }
 
 $(function () {
-  $('.upvote').on('click', upvote);
-  $('.downvote').on('click', downvote);
+  $('.vote-button.upvote').on('click', upvote);
+  $('.vote-button.downvote').on('click', downvote);
 });

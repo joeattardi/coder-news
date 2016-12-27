@@ -68,14 +68,14 @@ header {
     h4 {
       margin: 0;
       display: inline-block;
+    }
 
-      a {
-        color: $link-color;
-        text-decoration: none;
+    a {
+      color: $link-color;
+      text-decoration: none;
 
-        &:hover {
-          color: lighten($link-color, 10%);
-        }
+      &:hover {
+        color: lighten($link-color, 10%);
       }
     }
 
@@ -95,16 +95,16 @@ header {
       text-align: center;
     }
 
-    .upvote, .downvote {
+    .vote-button {
       cursor: pointer;
     }
 
-    .upvote.active {
-      color: orangered;
+    &.upvote .upvote, &.upvote .story-votes {
+      color: #F97849;
     }
 
-    .downvote.active {
-      color: purple;
+    &.downvote .downvote, &.downvote .story-votes {
+      color: #827DFF;
     }
   }
 }
