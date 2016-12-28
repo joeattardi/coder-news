@@ -11,15 +11,28 @@
       <%- include('partials/story', { story: story }) %>
 
       <% if (locals.user) { %>
-        <form id="commentForm">
+        <form id="commentForm" method="POST" action="/story/<%= story._id %>/comments">
           <div class="form-row">
-            <textarea id="comment" name="comment" rows="6" cols="60"></textarea>
+            <textarea id="comment" name="text" rows="6" cols="60"></textarea>
           </div>
           <div class="form-row">
             <button>Add comment</button>
           </div>
         </form>
       <% } %>
+
+      <% story.comments.forEach(comment => { %>
+        <div class="comment">
+          <div class="comment-info">
+            <b><%= comment.user.username %></b> <%= comment.relativePosted() %> | <%= comment.votes %> point<% if (comment.votes !== 1) { %>s<% } %>
+          </div>
+          <div class="comment-body"><%= comment.text %></div>
+          <div class="comment-tools">
+            <% if (locals.user) { %><i class="fa fa-reply"></i> reply<% } %>
+          </div>
+        </div>
+      <% }) %>
+
     </div>
   </body>
 </html>

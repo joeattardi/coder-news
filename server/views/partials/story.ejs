@@ -16,7 +16,7 @@
     <h4><a target="_blank" href="<%= story.url %>"><%= story.title %></a></h4>
     <span class="info">(<%= story.domain %>)</span>
     <div class="info">
-      submitted by <%= story.submitter.username %> <span title="<%= story.submitted %>"><%= story.relativeSubmitted() %></span> | <b><a href="/story/<%= story._id %>">0 comments</a></b>
+      submitted by <%= story.submitter.username %> <span title="<%= story.submitted %>"><%= story.relativeSubmitted() %></span> | <b><a href="/story/<%= story._id %>"><%= story.comments.length %> comment<% if (story.comments.length != 1) { %>s<% } %></a></b>
     </div>
   </div>
 </div>

@@ -16,6 +16,10 @@ const storySchema = new mongoose.Schema({
     required: true
   },
   domain: String,
+  comments: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Comment'
+  },
   upvoters: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'User'

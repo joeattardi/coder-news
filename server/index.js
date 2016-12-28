@@ -63,6 +63,7 @@ app.get('/', (req, res) => {
 app.get('/submit', storyController.viewSubmitPage);
 app.post('/submit', storyController.submitStory);
 app.get('/story/:storyId', storyController.viewStory);
+app.post('/story/:storyId/comments', storyController.postComment);
 
 app.get('/usernameExists', ajaxController.usernameExists);
 app.get('/extractTitle', ajaxController.extractTitle); 
