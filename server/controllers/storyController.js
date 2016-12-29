@@ -1,4 +1,5 @@
 const url = require('url');
+const markdown = require('markdown').markdown;
 
 const Story = require('../models/Story');
 const Comment = require('../models/Comment');
@@ -24,7 +25,7 @@ exports.viewStory = function viewStory(req, res) {
     })
     .then(story => {
       if (story) {
-        res.render('story', { story, user: req.session.user });
+        res.render('story', { story, markdown, user: req.session.user });
       } else {
         res.status(404).render('notFound');
       }
