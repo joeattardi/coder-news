@@ -1,5 +1,6 @@
 const axios = require('axios');
 
+const Comment = require('../models/Comment');
 const User = require('../models/User');
 const Story = require('../models/Story');
 
@@ -40,6 +41,34 @@ exports.vote = function upvote(req, res) {
     res.status(400).send();
   });
 }
+
+exports.deleteComment = function deleteComment(req, res) {
+  if (!req.session.user) {
+    return res.status(401).send();
+  }
+
+  Comment.findById(req.params.commentId).then(comment => {
+    if (!comment) {
+      res.status(404).send();
+    } else if (comment.user != req.session.user._id) {
+      res.status(403).send();
+    } else {
+      let newCommentCount;
+
+      Story.findById(comment.story).then(story => {
+        story.comments = story.comments.filter(commentId => commentId != req.params.commentId);
+        newCommentCount = story.comments.length;
+        return story.save();
+      }).then(() => {
+        return comment.remove(); 
+      }).then(() => {
+        res.status(200).json({ comments: newCommentCount }); 
+      }).catch(err => {
+        res.status(500).json({ error: err.message });
+      });
+    }
+  });
+};
 
 exports.usernameExists = function usernameExists(req, res) {
   User.findOne({ username: req.query.username }).then(user => {

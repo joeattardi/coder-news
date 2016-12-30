@@ -1,0 +1,20 @@
+<div data-comment-id="<%= comment._id %>" class="comment">
+  <div class="comment-info">
+    <b><%= comment.user.username %></b> <span title="<%= comment.posted %>"><%= comment.relativePosted() %></span> | <%= comment.votes %> point<% if (comment.votes !== 1) { %>s<% } %>
+  </div>
+  <div class="comment-body"><%- markdown.toHTML(comment.text) %></div>
+  <div class="comment-tools">
+    <% if (locals.user) { %>
+      <a href="#" class="comment-reply"><i class="fa fa-reply"></i> reply</a>
+    <% } %>
+    <% if (locals.user && user._id == comment.user._id) { %>
+      <a href="#" class="comment-edit"><i class="fa fa-edit"></i> edit</a>
+      <a href="#" class="comment-delete"><i class="fa fa-trash"></i> delete</a>
+      <span class="comment-delete-confirm-container">
+        are you sure?
+        <a style="margin-right: 0;" href="#" class="comment-delete-confirm">yes</a> | <a href="#" class="comment-delete-cancel">no</a>
+      </span>
+    <% } %>
+  </div>
+</div>
+

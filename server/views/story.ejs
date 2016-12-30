@@ -4,6 +4,7 @@
     <%- include('partials/head') %>
     <title>Coder News: <%= story.title %></title>
     <script src="/js/voting.js"></script>
+    <script src="/js/comments.js"></script>
   </head>
   <body>
     <%- include('partials/header') %>
@@ -22,15 +23,7 @@
       <% } %>
 
       <% story.comments.forEach(comment => { %>
-        <div class="comment">
-          <div class="comment-info">
-            <b><%= comment.user.username %></b> <span title="<%= comment.posted %>"><%= comment.relativePosted() %></span> | <%= comment.votes %> point<% if (comment.votes !== 1) { %>s<% } %>
-          </div>
-          <div class="comment-body"><%- markdown.toHTML(comment.text) %></div>
-          <div class="comment-tools">
-            <% if (locals.user) { %><i class="fa fa-reply"></i> reply<% } %>
-          </div>
-        </div>
+        <%- include('partials/comment', { comment: comment, markdown: markdown, user: user }) %>
       <% }) %>
 
     </div>

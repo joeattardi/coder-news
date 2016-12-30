@@ -47,6 +47,7 @@ exports.postComment = function postComment(req, res) {
     if (story) {
       const comment = new Comment({
         posted: new Date(),
+        story,
         text: req.body.text,
         user: req.session.user,
         votes: 1,

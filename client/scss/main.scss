@@ -120,6 +120,25 @@ header {
     font-size: 0.8em;
     color: #999999;
   }
+
+  .comment-delete-confirm-container {
+    display: none;
+  }
+
+  .comment-tools {
+    a {
+      margin-right: 0.5rem;
+    }
+  }
+
+  a {
+    color: $link-color;
+    text-decoration: none;
+
+    &:hover {
+      color: lighten($link-color, 10%);
+    }
+  }
 }
 
 input {
