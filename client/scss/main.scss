@@ -110,33 +110,40 @@ header {
   }
 }
 
-.comment {
+.comment-container {
   margin: 0.5em;
   padding: 0.5em;
   border: 1px solid #CCCCCC;
   border-radius: 5px;
 
-  .comment-info, .comment-tools {
-    font-size: 0.8em;
-    color: #999999;
-  }
-
-  .comment-delete-confirm-container {
+  .comment-edit-form {
     display: none;
   }
 
-  .comment-tools {
-    a {
-      margin-right: 0.5rem;
+  .comment {
+
+    .comment-info, .comment-tools {
+      font-size: 0.8em;
+      color: #999999;
     }
-  }
 
-  a {
-    color: $link-color;
-    text-decoration: none;
+    .comment-delete-confirm-container {
+      display: none;
+    }
 
-    &:hover {
-      color: lighten($link-color, 10%);
+    .comment-tools {
+      a {
+        margin-right: 0.5rem;
+      }
+    }
+
+    a {
+      color: $link-color;
+      text-decoration: none;
+
+      &:hover {
+        color: lighten($link-color, 10%);
+      }
     }
   }
 }

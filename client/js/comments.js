@@ -1,10 +1,11 @@
 import $ from 'jquery';
+import markdown from 'markdown';
 
 function deleteComment(event) {
   event.preventDefault();
 
-  const $container = $(this).closest('.comment');
-  const commentId = $container.closest('.comment').data('comment-id');
+  const $container = $(this).closest('.comment-container');
+  const commentId = $container.data('comment-id');
 
   $.ajax({
     method: 'DELETE',
@@ -39,8 +40,50 @@ function cancelDeleteComment(event) {
   $deleteLink.show();
 }
 
+function editComment(event) {
+  event.preventDefault();
+
+  const $container = $(this).closest('.comment-container');
+  $container.find('.comment').hide();
+  $container.find('.comment-edit-form').show();
+}
+
+function cancelEditComment(event) {
+  event.preventDefault();
+
+  const $container = $(this).closest('.comment-container');
+  $container.find('.comment-edit-form').hide();
+  $container.find('.comment').show(); 
+}
+
+function submitEditComment(event) {
+  event.preventDefault();
+
+  const $this = $(this);
+  const $container = $this.closest('.comment-container');
+
+  const commentId = $container.data('comment-id');
+  const commentText = $this.find('textarea').val();
+
+  $.ajax({
+    method: 'POST',
+    url: `/comment/${commentId}`,
+    data: {
+      commentText
+    }
+  }).then(() => {
+    $container.find('.comment-body').html(markdown.markdown.toHTML(commentText));
+    $container.find('.comment-edit-form').hide();
+    $container.find('.comment').show();
+  });
+}
+
 $(function () {
   $('.comment-delete').on('click', confirmDeleteComment); 
   $('.comment-delete-confirm').on('click', deleteComment);
   $('.comment-delete-cancel').on('click', cancelDeleteComment);
+
+  $('.comment-edit-form form').on('submit', submitEditComment);
+  $('.comment-edit').on('click', editComment);
+  $('.comment-edit-cancel').on('click', cancelEditComment);
 });

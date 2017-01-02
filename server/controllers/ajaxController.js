@@ -40,7 +40,19 @@ exports.vote = function upvote(req, res) {
     console.log(error);
     res.status(400).send();
   });
-}
+};
+
+exports.editComment = function editComment(req, res) {
+  Comment.update({ _id: req.params.commentId }, { text: req.body.commentText }).then(result => {
+    if (result.nModified === 0) {
+      return res.status(404).send();
+    }
+    
+    return res.status(200).send(); 
+  }).catch(err => {
+    res.status(500).json({ error: err.message }); 
+  });
+};
 
 exports.deleteComment = function deleteComment(req, res) {
   if (!req.session.user) {
