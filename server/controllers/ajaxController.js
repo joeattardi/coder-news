@@ -37,21 +37,31 @@ exports.vote = function upvote(req, res) {
   }).then(savedStory => {
     res.status(200).json({ votes: savedStory.votes });
   }).catch(error => {
-    console.log(error);
     res.status(400).send();
   });
 };
 
 exports.editComment = function editComment(req, res) {
-  Comment.update({ _id: req.params.commentId }, { text: req.body.commentText }).then(result => {
-    if (result.nModified === 0) {
-      return res.status(404).send();
+  if (!req.session.user) {
+    return res.status(401).send();
+  }
+
+  let status = 200;
+
+  Comment.findById(req.params.commentId).then(comment => {
+    if (!comment) {
+      status = 404;
+    } else if (comment.user != req.session.user._id) {
+      status = 403;
+    } else {
+      comment.text = req.body.commentText;
+    return comment.save();
     }
-    
-    return res.status(200).send(); 
-  }).catch(err => {
-    res.status(500).json({ error: err.message }); 
-  });
+  }).then(saved => {
+    res.status(status).send();
+  }).catch(error => {
+    res.status(500).json({ error: error.message }); 
+  });;
 };
 
 exports.deleteComment = function deleteComment(req, res) {
