@@ -1,6 +1,8 @@
 import $ from 'jquery';
 import markdown from 'markdown';
 
+const FADE_SPEED = 200;
+
 function deleteComment(event) {
   event.preventDefault();
 
@@ -11,7 +13,7 @@ function deleteComment(event) {
     method: 'DELETE',
     url: `/comment/${commentId}`
   }).then(result => {
-    $container.fadeOut(() => {
+    $container.fadeOut(FADE_SPEED, () => {
       $container.remove();
       $('.comments-link').html(result.comments !== 1 ? `${result.comments} comments` : '1 comment');
     });
@@ -24,8 +26,9 @@ function confirmDeleteComment(event) {
   const $this = $(this);
   const $confirmation = $this.closest('.comment').find('.comment-delete-confirm-container');
 
-  $this.hide(); 
-  $confirmation.show();
+  $this.fadeOut(FADE_SPEED, () => {
+    $confirmation.fadeIn(FADE_SPEED);
+  });
 }
 
 function cancelDeleteComment(event) {
@@ -36,24 +39,27 @@ function cancelDeleteComment(event) {
   const $deleteLink = $container.find('.comment-delete');
   const $confirmationContainer = $container.find('.comment-delete-confirm-container');
 
-  $confirmationContainer.hide();
-  $deleteLink.show();
+  $confirmationContainer.fadeOut(FADE_SPEED, () => {
+    $deleteLink.fadeIn(FADE_SPEED);
+  });
 }
 
 function editComment(event) {
   event.preventDefault();
 
   const $container = $(this).closest('.comment-container');
-  $container.find('.comment').hide();
-  $container.find('.comment-edit-form').show();
+  $container.find('.comment').fadeOut(FADE_SPEED, () => {
+    $container.find('.comment-edit-form').fadeIn(FADE_SPEED);
+  });
 }
 
 function cancelEditComment(event) {
   event.preventDefault();
 
   const $container = $(this).closest('.comment-container');
-  $container.find('.comment-edit-form').hide();
-  $container.find('.comment').show(); 
+  $container.find('.comment-edit-form').fadeOut(FADE_SPEED, () => {
+    $container.find('.comment').fadeIn(FADE_SPEED);
+  });
 }
 
 function submitEditComment(event) {
@@ -73,8 +79,9 @@ function submitEditComment(event) {
     }
   }).then(() => {
     $container.find('.comment-body').html(markdown.markdown.toHTML(commentText));
-    $container.find('.comment-edit-form').hide();
-    $container.find('.comment').show();
+    $container.find('.comment-edit-form').fadeOut(FADE_SPEED, () => {
+      $container.find('.comment').fadeIn(FADE_SPEED);
+    });
   });
 }
 
