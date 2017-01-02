@@ -1,11 +1,12 @@
 <div data-comment-id="<%= comment._id %>" class="comment-container">
   <div class="comment-edit-form">
     <form>
+      <input type="hidden" class="comment-edit-original" value="<%= comment.text %>" />
       <div class="form-row">
         <textarea rows="6" cols="60"><%= comment.text %></textarea>
       </div>
       <div class="form-row">
-        <button>Submit</button>
+        <button class="comment-edit-submit">Submit</button>
         <button type="button" class="comment-edit-cancel">Cancel</button>
       </div>
     </form>

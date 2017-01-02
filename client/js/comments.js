@@ -48,6 +48,10 @@ function editComment(event) {
   event.preventDefault();
 
   const $container = $(this).closest('.comment-container');
+
+  const existingCommentText = $container.find('.comment-edit-original').val();
+  $container.find('.comment-edit-form textarea').val(existingCommentText);
+  $container.find('.comment-edit-submit').prop('disabled', false);
   $container.find('.comment').fadeOut(FADE_SPEED, () => {
     $container.find('.comment-edit-form').fadeIn(FADE_SPEED);
   });
@@ -71,6 +75,9 @@ function submitEditComment(event) {
   const commentId = $container.data('comment-id');
   const commentText = $this.find('textarea').val();
 
+  const $button = $this.find('.comment-edit-submit');
+  $button.prop('disabled', true);
+
   $.ajax({
     method: 'POST',
     url: `/comment/${commentId}`,
@@ -78,11 +85,19 @@ function submitEditComment(event) {
       commentText
     }
   }).then(() => {
+    $container.find('.comment-edit-original').val(commentText);
     $container.find('.comment-body').html(markdown.markdown.toHTML(commentText));
     $container.find('.comment-edit-form').fadeOut(FADE_SPEED, () => {
       $container.find('.comment').fadeIn(FADE_SPEED);
+      $button.prop('disabled', false);
     });
   });
+}
+
+function checkEmptyComment() {
+  const $textarea = $(this);
+  $textarea.closest('form').find('.comment-edit-submit').prop('disabled', 
+    $textarea.val() === '');
 }
 
 $(function () {
@@ -93,4 +108,5 @@ $(function () {
   $('.comment-edit-form form').on('submit', submitEditComment);
   $('.comment-edit').on('click', editComment);
   $('.comment-edit-cancel').on('click', cancelEditComment);
+  $('.comment-edit-form textarea').on('keyup', checkEmptyComment);
 });

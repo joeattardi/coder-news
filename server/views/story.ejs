@@ -5,6 +5,7 @@
     <title>Coder News: <%= story.title %></title>
     <script src="/js/voting.js"></script>
     <script src="/js/comments.js"></script>
+    <script src="/js/storyPage.js"></script>
   </head>
   <body>
     <%- include('partials/header') %>
@@ -17,7 +18,7 @@
             <textarea id="comment" name="text" rows="6" cols="60"></textarea>
           </div>
           <div class="form-row">
-            <button>Add comment</button>
+            <button id="comment-submit-button" disabled>Add comment</button>
           </div>
         </form>
       <% } %>

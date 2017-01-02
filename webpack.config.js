@@ -4,6 +4,7 @@ module.exports = {
   entry: {
     submitPage: './client/js/submitPage.js',
     signupPage: './client/js/signupPage.js',
+    storyPage: './client/js/storyPage.js',
     loginPage: './client/js/loginPage.js',
     voting: './client/js/voting.js',
     comments: './client/js/comments.js'
