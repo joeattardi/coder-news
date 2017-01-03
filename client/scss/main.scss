@@ -5,6 +5,8 @@ $button-color: #83B4AF;
 $header-color: #8489B5;
 $error-color: #A30000;
 $info-color: #E6F6Fb;
+$upvote-color: #F97849;
+$downvote-color: #827DFF;
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -101,11 +103,11 @@ header {
     }
 
     &.upvote .upvote, &.upvote .story-votes {
-      color: #F97849;
+      color: $upvote-color;
     }
 
     &.downvote .downvote, &.downvote .story-votes {
-      color: #827DFF;
+      color: $downvote-color;
     }
   }
 }
@@ -115,9 +117,26 @@ header {
   padding: 0.5em;
   border: 1px solid #CCCCCC;
   border-radius: 5px;
+  display: flex;
 
   .comment-edit-form {
     display: none;
+  }
+
+  .comment-votes {
+    margin-right: 0.5rem;
+
+    .vote-button {
+      cursor: pointer;
+    }
+
+    &.upvote .upvote {
+      color: $upvote-color;
+    }
+
+    &.downvote .downvote {
+      color: $downvote-color;
+    }
   }
 
   .comment {

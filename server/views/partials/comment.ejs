@@ -11,6 +11,14 @@
       </div>
     </form>
   </div>
+  <div class="comment-votes <%= locals.user && comment.getUserVote(user) %>">
+    <div class="vote-button upvote">
+      <i class="fa fa-chevron-up"></i>
+    </div>
+    <div class="vote-button downvote">
+      <i class="fa fa-chevron-down"></i>
+    </div>
+  </div>
   <div class="comment">
     <div class="comment-info">
       <b><%= comment.user.username %></b> <span title="<%= comment.posted %>"><%= comment.relativePosted() %></span> | <%= comment.votes %> point<% if (comment.votes !== 1) { %>s<% } %>

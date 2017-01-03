@@ -43,4 +43,24 @@ commentSchema.methods.relativePosted = function relativePosted() {
   return moment(this.posted).fromNow(); 
 };
 
+commentSchema.methods.isUpvoter = function isUpvoter(user) {
+  return this.upvoters.indexOf(user._id) >= 0;
+}
+
+commentSchema.methods.isDownvoter = function isDownvoter(user) {
+  return this.downvoters.indexOf(user._id) >= 0;
+}
+
+commentSchema.methods.getUserVote = function getUserStatus(user) {
+  if (user) {
+    if (this.isUpvoter(user)) {
+      return 'upvote'; 
+    } else if (this.isDownvoter(user)) {
+      return 'downvote';
+    }
+  }
+
+  return '';
+}
+
 module.exports = mongoose.model('Comment', commentSchema);
