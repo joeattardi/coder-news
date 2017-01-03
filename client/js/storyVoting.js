@@ -5,7 +5,7 @@ function vote($button, $storyContainer, direction) {
 
   return $.ajax({
     method: 'POST',
-    url: `/vote?direction=${direction}&_id=${storyId}`
+    url: `/story/${storyId}/vote?direction=${direction}`
   }).then(result => {
     $storyContainer.find('.story-votes').html(result.votes); 
   });
