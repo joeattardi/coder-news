@@ -6,7 +6,7 @@ const Story = require('../models/Story');
 
 const TITLE_REGEX = /<title>(.*)<\/title>/i;
 
-exports.vote = function upvote(req, res) {
+exports.voteStory = function upvote(req, res) {
   if (!req.session.user) {
     return res.status(401).send();
   }
@@ -14,7 +14,7 @@ exports.vote = function upvote(req, res) {
   const direction = parseInt(req.query.direction);
   const userId = req.session.user._id;
 
-  Story.findOne({ _id: req.query._id }).then(story => {
+  Story.findOne({ _id: req.params.storyId }).then(story => {
     const voterProperty = direction > 0 ? 'upvoters' : 'downvoters';
     const otherVoterProperty = direction > 0 ? 'downvoters' : 'upvoters';
 
