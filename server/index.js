@@ -14,7 +14,7 @@ const scoreUpdater = require('./score-updater');
 const ITEMS_PER_PAGE = 25;
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/codernews');
+mongoose.connect(process.env.MONGODB_URI);
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(express.static('./client/public'));
 app.use(session({
-  secret: 'abc123',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }));
