@@ -4,7 +4,7 @@ const Comment = require('../models/Comment');
 const User = require('../models/User');
 const Story = require('../models/Story');
 
-const TITLE_REGEX = /<title>(.*)<\/title>/i;
+const TITLE_REGEX = /<title.*>(.*)<\/title>/i;
 
 function vote(cls, id, direction, userId, res) {
   // prevent multiple votes
