@@ -27,7 +27,10 @@ exports.login = function login(req, res) {
 
   User.findOne({ username: req.body.username }).then(user => {
     if (bcrypt.compareSync(req.body.password, user.password)) {
-      req.session.user = user;
+      req.session.user = {
+        _id: user._id,
+        username: user.username 
+      };
       req.session.message = 'You have successfully logged in.';
       res.redirect('/');
     } else {

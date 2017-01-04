@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressValidator = require('express-validator');
@@ -18,10 +19,16 @@ mongoose.connect(process.env.MONGODB_URI);
 
 const app = express();
 
+const sessionStore = new MongoDBStore({
+  uri: process.env.MONGODB_URI,
+  collection: 'sessions'
+});
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(express.static('./client/public'));
 app.use(session({
+  store: sessionStore,
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
