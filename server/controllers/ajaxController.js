@@ -6,7 +6,42 @@ const Story = require('../models/Story');
 
 const TITLE_REGEX = /<title>(.*)<\/title>/i;
 
-exports.voteStory = function upvote(req, res) {
+function vote(cls, id, direction, userId, res) {
+  // prevent multiple votes
+  if (direction > 1) {
+    direction = 1;
+  } else if (direction < -1) {
+    direction = -1;
+  }
+
+  cls.findById(id).then(item => {
+    const voterProperty = direction > 0 ? 'upvoters' : 'downvoters';
+    const otherVoterProperty = direction > 0 ? 'downvoters' : 'upvoters';
+
+    const index = item[voterProperty].indexOf(userId);
+    if (index < 0) {
+      item[voterProperty].push(userId);
+      item.votes += direction;
+    } else { 
+      item.votes -= direction;
+      item[voterProperty].splice(index, 1);
+    }
+
+    const otherIndex = item[otherVoterProperty].indexOf(userId);
+    if (otherIndex >= 0) {
+      item[otherVoterProperty].splice(otherIndex, 1);
+      item.votes -= -direction;
+    }
+
+    return item.save();
+  }).then(savedItem => {
+    res.status(200).json({ votes: savedItem.votes }); 
+  }).catch(error => {
+    res.status(500).send({ error: error.message }); 
+  }); 
+}
+
+exports.voteComment = function voteComment(req, res) {
   if (!req.session.user) {
     return res.status(401).send();
   }
@@ -14,31 +49,18 @@ exports.voteStory = function upvote(req, res) {
   const direction = parseInt(req.query.direction);
   const userId = req.session.user._id;
 
-  Story.findOne({ _id: req.params.storyId }).then(story => {
-    const voterProperty = direction > 0 ? 'upvoters' : 'downvoters';
-    const otherVoterProperty = direction > 0 ? 'downvoters' : 'upvoters';
+  vote(Comment, req.params.commentId, direction, userId, res);
+};
 
-    const index = story[voterProperty].indexOf(userId);
-    if (index < 0) {
-      story[voterProperty].push(req.session.user._id);
-      story.votes += direction;
-    } else {
-      story.votes -= direction;
-      story[voterProperty].splice(index, 1);
-    }
+exports.voteStory = function voteStory(req, res) {
+  if (!req.session.user) {
+    return res.status(401).send();
+  }
 
-    const otherIndex = story[otherVoterProperty].indexOf(userId);
-    if (otherIndex >= 0) {
-      story[otherVoterProperty].splice(otherIndex, 1);
-      story.votes -= -direction;
-    }
+  const direction = parseInt(req.query.direction);
+  const userId = req.session.user._id;
 
-    return story.save();
-  }).then(savedStory => {
-    res.status(200).json({ votes: savedStory.votes });
-  }).catch(error => {
-    res.status(400).send();
-  });
+  vote(Story, req.params.storyId, direction, userId, res);
 };
 
 exports.editComment = function editComment(req, res) {

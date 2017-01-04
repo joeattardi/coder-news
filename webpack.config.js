@@ -7,6 +7,7 @@ module.exports = {
     storyPage: './client/js/storyPage.js',
     loginPage: './client/js/loginPage.js',
     storyVoting: './client/js/storyVoting.js',
+    commentVoting: './client/js/commentVoting.js',
     comments: './client/js/comments.js'
   },
 

@@ -68,6 +68,7 @@ app.post('/story/:storyId/comments', storyController.postComment);
 app.get('/usernameExists', ajaxController.usernameExists);
 app.get('/extractTitle', ajaxController.extractTitle); 
 app.post('/story/:storyId/vote', ajaxController.voteStory);
+app.post('/comment/:commentId/vote', ajaxController.voteComment);
 app.post('/comment/:commentId', ajaxController.editComment);
 app.delete('/comment/:commentId', ajaxController.deleteComment);
 

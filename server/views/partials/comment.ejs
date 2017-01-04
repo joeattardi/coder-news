@@ -11,17 +11,19 @@
       </div>
     </form>
   </div>
-  <div class="comment-votes <%= locals.user && comment.getUserVote(user) %>">
-    <div class="vote-button upvote">
-      <i class="fa fa-chevron-up"></i>
+  <% if (locals.user) { %>
+    <div class="comment-votes <%= locals.user && comment.getUserVote(user) %>">
+      <div class="vote-button upvote">
+        <i class="fa fa-chevron-up"></i>
+      </div>
+      <div class="vote-button downvote">
+        <i class="fa fa-chevron-down"></i>
+      </div>
     </div>
-    <div class="vote-button downvote">
-      <i class="fa fa-chevron-down"></i>
-    </div>
-  </div>
+  <% } %>
   <div class="comment">
     <div class="comment-info">
-      <b><%= comment.user.username %></b> <span title="<%= comment.posted %>"><%= comment.relativePosted() %></span> | <%= comment.votes %> point<% if (comment.votes !== 1) { %>s<% } %>
+      <b><%= comment.user.username %></b> <span title="<%= comment.posted %>"><%= comment.relativePosted() %></span> | <span class="comment-vote-count"><%= comment.votes %> point<% if (comment.votes !== 1) { %>s<% } %></span>
     </div>
     <div class="comment-body"><%- markdown.toHTML(comment.text) %></div>
     <div class="comment-tools">

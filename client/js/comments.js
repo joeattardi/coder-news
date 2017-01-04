@@ -52,6 +52,7 @@ function editComment(event) {
   const existingCommentText = $container.find('.comment-edit-original').val();
   $container.find('.comment-edit-form textarea').val(existingCommentText);
   $container.find('.comment-edit-submit').prop('disabled', false);
+  $container.find('.comment-votes').fadeOut(FADE_SPEED);
   $container.find('.comment').fadeOut(FADE_SPEED, () => {
     $container.find('.comment-edit-form').fadeIn(FADE_SPEED);
   });
@@ -62,6 +63,7 @@ function cancelEditComment(event) {
 
   const $container = $(this).closest('.comment-container');
   $container.find('.comment-edit-form').fadeOut(FADE_SPEED, () => {
+    $container.find('.comment-votes').fadeIn(FADE_SPEED);
     $container.find('.comment').fadeIn(FADE_SPEED);
   });
 }
