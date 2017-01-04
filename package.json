@@ -6,7 +6,8 @@
   "scripts": {
     "build-css": "node-sass --include-path scss client/scss/main.scss client/public/css/main.css && cp -R client/css/* client/public/css",
     "watch-css": "nodemon --exec 'node-sass --include-path scss client/scss/main.scss client/public/css/main.css' -e scss",
-    "start": "nodemon -e js,ejs server/index.js",
+    "start:dev": "nodemon -e js,ejs server/index.js",
+    "start": "webpack && npm run build-css && node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Joe Attardi <joe@attardi.net> (http://www.thinksincode.com)",
