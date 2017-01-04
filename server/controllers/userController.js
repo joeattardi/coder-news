@@ -26,7 +26,7 @@ exports.login = function login(req, res) {
   }
 
   User.findOne({ username: req.body.username }).then(user => {
-    if (bcrypt.compareSync(req.body.password, user.password)) {
+    if (user && bcrypt.compareSync(req.body.password, user.password)) {
       req.session.user = {
         _id: user._id,
         username: user.username 
@@ -36,6 +36,8 @@ exports.login = function login(req, res) {
     } else {
       res.render('login', { loginError: 'Invalid username or password.' });
     }
+  }).catch(error => {
+    res.status(500).render('error', { error });
   });
 };
 
