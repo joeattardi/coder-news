@@ -17,6 +17,7 @@ header {
   background-color: $header-color;
   border-bottom: 5px solid darken($header-color, 10%);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   padding: 0.5em;
 
