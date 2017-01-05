@@ -73,7 +73,7 @@ exports.editComment = function editComment(req, res) {
   Comment.findById(req.params.commentId).then(comment => {
     if (!comment) {
       status = 404;
-    } else if (comment.user != req.session.user._id) {
+    } else if (!comment.user.equals(req.session.user._id)) {
       status = 403;
     } else {
       comment.text = req.body.commentText;
@@ -94,7 +94,7 @@ exports.deleteComment = function deleteComment(req, res) {
   Comment.findById(req.params.commentId).then(comment => {
     if (!comment) {
       res.status(404).send();
-    } else if (comment.user != req.session.user._id) {
+    } else if (!comment.user.equals(req.session.user._id)) {
       res.status(403).send();
     } else {
       let newCommentCount;

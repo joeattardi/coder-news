@@ -13,6 +13,24 @@ exports.viewSubmitPage = function viewSubmitPage(req, res) {
   res.render('submit', { validationErrors: null, user: req.session.user });
 };
 
+exports.deleteStory = function deleteStory(req, res) {
+  if (!req.session.user) {
+    res.status(401).send()
+  }
+
+  Story.findById(req.params.storyId).then(story => {
+    if (!story) {
+      res.status(404).send();
+    } else if (!story.submitter.equals(req.session.user._id)) {
+      res.status(403).send();
+    } else {
+      story.remove().then(removed => {
+        res.status(200).send(); 
+      }); 
+    }
+  });
+};
+
 exports.viewStory = function viewStory(req, res) {
   Story.findById(req.params.storyId)
     .populate('submitter')

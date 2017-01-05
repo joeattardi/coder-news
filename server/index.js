@@ -71,6 +71,7 @@ app.get('/submit', storyController.viewSubmitPage);
 app.post('/submit', storyController.submitStory);
 app.get('/story/:storyId', storyController.viewStory);
 app.post('/story/:storyId/comments', storyController.postComment);
+app.delete('/story/:storyId', storyController.deleteStory);
 
 app.get('/usernameExists', ajaxController.usernameExists);
 app.get('/extractTitle', ajaxController.extractTitle); 

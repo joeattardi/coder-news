@@ -17,6 +17,13 @@
     <span class="info">(<%= story.domain %>)</span>
     <div class="info">
       submitted by <%= story.submitter.username %> <span title="<%= story.submitted %>"><%= story.relativeSubmitted() %></span> | <b><a class="comments-link" href="/story/<%= story._id %>"><%= story.comments.length %> comment<% if (story.comments.length != 1) { %>s<% } %></a></b>
+      <% if (locals.user && user._id.equals(story.submitter._id)) { %>
+        | <a href="#" class="story-delete"><i class="fa fa-trash"></i> delete</a>
+        <span class="story-delete-confirm-container" style="display: none;">
+          are you sure?
+          <a style="margin-right: 0;" href="#" class="story-delete-confirm">yes</a> | <a href="#" class="story-delete-cancel">no</a>
+        </span>
+      <% } %>
     </div>
   </div>
 </div>
