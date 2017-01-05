@@ -4,7 +4,7 @@ const Comment = require('../models/Comment');
 const User = require('../models/User');
 const Story = require('../models/Story');
 
-const TITLE_REGEX = /<title.*>(.*)<\/title>/i;
+const TITLE_REGEX = /<title.*>([\s\S]*)<\/title>/i;
 
 function vote(cls, id, direction, userId, res) {
   // prevent multiple votes
@@ -132,7 +132,7 @@ exports.extractTitle = function extractTitle(req, res) {
     const matcher = TITLE_REGEX.exec(result.data);
     if (matcher) {
       res.json({
-        title: matcher[1]
+        title: matcher[1].trim()
       });
     } else {
       res.status(400).json({
