@@ -30,7 +30,7 @@
       <% if (locals.user) { %>
         <a href="#" class="comment-reply"><i class="fa fa-reply"></i> reply</a>
       <% } %>
-      <% if (locals.user && user._id == comment.user._id) { %>
+      <% if (locals.user && user._id.equals(comment.user._id)) { %>
         <a href="#" class="comment-edit"><i class="fa fa-edit"></i> edit</a>
         <a href="#" class="comment-delete"><i class="fa fa-trash"></i> delete</a>
         <span class="comment-delete-confirm-container">
