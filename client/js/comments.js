@@ -15,7 +15,8 @@ function deleteComment(event) {
   }).then(result => {
     $container.fadeOut(FADE_SPEED, () => {
       $container.remove();
-      $('.comments-link').html(result.comments !== 1 ? `${result.comments} comments` : '1 comment');
+      const commentCount = $('.comment-container').length;
+      $('.comments-link').html(commentCount !== 1 ? `${commentCount} comments` : '1 comment');
     });
   });
 }
@@ -49,12 +50,12 @@ function editComment(event) {
 
   const $container = $(this).closest('.comment-container');
 
-  const existingCommentText = $container.find('.comment-edit-original').val();
-  $container.find('.comment-edit-form textarea').val(existingCommentText);
-  $container.find('.comment-edit-submit').prop('disabled', false);
-  $container.find('.comment-votes').fadeOut(FADE_SPEED);
-  $container.find('.comment').fadeOut(FADE_SPEED, () => {
-    $container.find('.comment-edit-form').fadeIn(FADE_SPEED);
+  const existingCommentText = $container.find('.comment-edit-original:first').val();
+  $container.find('.comment-edit-form:first textarea').val(existingCommentText);
+  $container.find('.comment-edit-submit:first').prop('disabled', false);
+  $container.find('.comment-votes:first').fadeOut(FADE_SPEED);
+  $container.find('.comment:first').fadeOut(FADE_SPEED, () => {
+    $container.find('.comment-edit-form:first').fadeIn(FADE_SPEED);
   });
 }
 
@@ -90,6 +91,7 @@ function submitEditComment(event) {
     $container.find('.comment-edit-original').val(commentText);
     $container.find('.comment-body').html(markdown.markdown.toHTML(commentText));
     $container.find('.comment-edit-form').fadeOut(FADE_SPEED, () => {
+      $container.find('.comment-votes').fadeIn(FADE_SPEED);
       $container.find('.comment').fadeIn(FADE_SPEED);
       $button.prop('disabled', false);
     });
@@ -98,8 +100,70 @@ function submitEditComment(event) {
 
 function checkEmptyComment() {
   const $textarea = $(this);
-  $textarea.closest('form').find('.comment-edit-submit').prop('disabled', 
+  $textarea.closest('form').find('.submit').prop('disabled', 
     $textarea.val() === '');
+}
+
+function showReplyForm(event) {
+  event.preventDefault();
+  const $replyForm = $(this).closest('.comment-container').find('.comment-reply-form:first');
+  $replyForm.fadeIn(FADE_SPEED, () => {
+    $replyForm.find('textarea').focus();
+  });
+}
+
+function cancelReply(event) {
+  event.preventDefault();
+  const $replyForm = $(this).closest('.comment-container').find('.comment-reply-form:first');
+  $replyForm.fadeOut(FADE_SPEED, () => {
+    $replyForm.find('textarea').val('');
+  });
+}
+
+function submitReply(event) {
+  event.preventDefault();
+
+  const $this = $(this);
+  const $container = $this.closest('.comment-container');
+
+  const commentId = $container.data('comment-id');
+  const commentText = $this.find('textarea').val();
+
+  const $button = $this.find('.comment-reply-submit');
+  $button.prop('disabled', true);
+
+  $.ajax({
+    method: 'POST',
+    url: `/comment/${commentId}/reply`,
+    data: {
+      commentText
+    }
+  }).then(result => {
+    const $newMarkup = $(result.markup);
+    addEventListeners($newMarkup);
+
+    $('.comments-link').html(result.comments !== 1 ? `${result.comments} comments` : '1 comment');
+    $container.find('.comment-reply-form:first').fadeOut(FADE_SPEED, () => {
+      $container.find('.comment-replies:first').append($newMarkup); 
+      $container.find('.comment-reply:first').on('click', showReplyForm);
+    });
+  });
+}
+
+function addEventListeners($parent) {
+  $parent.find('.comment-delete').on('click', confirmDeleteComment); 
+  $parent.find('.comment-delete-confirm').on('click', deleteComment);
+  $parent.find('.comment-delete-cancel').on('click', cancelDeleteComment);
+
+  $parent.find('.comment-edit-form form').on('submit', submitEditComment);
+  $parent.find('.comment-edit').on('click', editComment);
+  $parent.find('.comment-edit-cancel').on('click', cancelEditComment);
+  $parent.find('.comment-edit-form textarea').on('keyup', checkEmptyComment);
+
+  $parent.find('.comment-reply').on('click', showReplyForm);
+  $parent.find('.comment-reply-cancel').on('click', cancelReply);
+  $parent.find('.comment-reply-form textarea').on('keyup', checkEmptyComment);
+  $parent.find('.comment-reply-form form').on('submit', submitReply);
 }
 
 $(function () {
@@ -111,4 +175,9 @@ $(function () {
   $('.comment-edit').on('click', editComment);
   $('.comment-edit-cancel').on('click', cancelEditComment);
   $('.comment-edit-form textarea').on('keyup', checkEmptyComment);
+
+  $('.comment-reply').on('click', showReplyForm);
+  $('.comment-reply-cancel').on('click', cancelReply);
+  $('.comment-reply-form textarea').on('keyup', checkEmptyComment);
+  $('.comment-reply-form form').on('submit', submitReply);
 });

@@ -116,54 +116,58 @@ header {
   padding: 0.5em;
   border: 1px solid #CCCCCC;
   border-radius: 5px;
-  display: flex;
+
+  .comment-content {
+    display: flex;
+
+    .comment-votes {
+      margin-right: 0.5rem;
+
+      .vote-button {
+        cursor: pointer;
+      }
+
+      &.upvote .upvote {
+        color: $upvote-color;
+      }
+
+      &.downvote .downvote {
+        color: $downvote-color;
+      }
+    }
+
+    .comment {
+
+      .comment-info, .comment-tools {
+        font-size: 0.8em;
+        color: #999999;
+      }
+
+      .comment-delete-confirm-container {
+        display: none;
+      }
+
+      .comment-tools {
+        a {
+          margin-right: 0.5rem;
+        }
+      }
+
+      a {
+        color: $link-color;
+        text-decoration: none;
+
+        &:hover {
+          color: lighten($link-color, 10%);
+        }
+      }
+    }
+  }
 
   .comment-edit-form {
     display: none;
   }
 
-  .comment-votes {
-    margin-right: 0.5rem;
-
-    .vote-button {
-      cursor: pointer;
-    }
-
-    &.upvote .upvote {
-      color: $upvote-color;
-    }
-
-    &.downvote .downvote {
-      color: $downvote-color;
-    }
-  }
-
-  .comment {
-
-    .comment-info, .comment-tools {
-      font-size: 0.8em;
-      color: #999999;
-    }
-
-    .comment-delete-confirm-container {
-      display: none;
-    }
-
-    .comment-tools {
-      a {
-        margin-right: 0.5rem;
-      }
-    }
-
-    a {
-      color: $link-color;
-      text-decoration: none;
-
-      &:hover {
-        color: lighten($link-color, 10%);
-      }
-    }
-  }
 }
 
 input {

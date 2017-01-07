@@ -6,38 +6,56 @@
         <textarea rows="6" cols="60"><%= comment.text %></textarea>
       </div>
       <div class="form-row">
-        <button class="comment-edit-submit">Submit</button>
+        <button class="submit comment-edit-submit">Submit</button>
         <button type="button" class="comment-edit-cancel">Cancel</button>
       </div>
     </form>
   </div>
-  <% if (locals.user) { %>
-    <div class="comment-votes <%= locals.user && comment.getUserVote(user) %>">
-      <div class="vote-button upvote">
-        <i class="fa fa-chevron-up"></i>
+  <div class="comment-content">
+    <% if (locals.user) { %>
+      <div class="comment-votes <%= locals.user && comment.getUserVote(user) %>">
+        <div class="vote-button upvote">
+          <i class="fa fa-chevron-up"></i>
+        </div>
+        <div class="vote-button downvote">
+          <i class="fa fa-chevron-down"></i>
+        </div>
       </div>
-      <div class="vote-button downvote">
-        <i class="fa fa-chevron-down"></i>
+    <% } %>
+    <div class="comment">
+      <div class="comment-info">
+        <b><%= comment.user.username %></b> <span title="<%= comment.posted %>"><%= comment.relativePosted() %></span> | <span class="comment-vote-count"><%= comment.votes %> point<% if (comment.votes !== 1) { %>s<% } %></span>
+      </div>
+      <div class="comment-body"><%- markdown.toHTML(comment.text) %></div>
+      <div class="comment-tools">
+        <% if (locals.user) { %>
+          <a href="#" class="comment-reply"><i class="fa fa-reply"></i> reply</a>
+        <% } %>
+        <% if (locals.user && user._id.equals(comment.user._id)) { %>
+          <a href="#" class="comment-edit"><i class="fa fa-edit"></i> edit</a>
+          <a href="#" class="comment-delete"><i class="fa fa-trash"></i> delete</a>
+          <span class="comment-delete-confirm-container">
+            are you sure?
+            <a style="margin-right: 0;" href="#" class="comment-delete-confirm">yes</a> | <a href="#" class="comment-delete-cancel">no</a>
+          </span>
+        <% } %>
       </div>
     </div>
-  <% } %>
-  <div class="comment">
-    <div class="comment-info">
-      <b><%= comment.user.username %></b> <span title="<%= comment.posted %>"><%= comment.relativePosted() %></span> | <span class="comment-vote-count"><%= comment.votes %> point<% if (comment.votes !== 1) { %>s<% } %></span>
-    </div>
-    <div class="comment-body"><%- markdown.toHTML(comment.text) %></div>
-    <div class="comment-tools">
-      <% if (locals.user) { %>
-        <a href="#" class="comment-reply"><i class="fa fa-reply"></i> reply</a>
-      <% } %>
-      <% if (locals.user && user._id.equals(comment.user._id)) { %>
-        <a href="#" class="comment-edit"><i class="fa fa-edit"></i> edit</a>
-        <a href="#" class="comment-delete"><i class="fa fa-trash"></i> delete</a>
-        <span class="comment-delete-confirm-container">
-          are you sure?
-          <a style="margin-right: 0;" href="#" class="comment-delete-confirm">yes</a> | <a href="#" class="comment-delete-cancel">no</a>
-        </span>
-      <% } %>
-    </div>
+  </div>
+  <div class="comment-reply-form" style="display: none;">
+    <form>
+      <div class="form-row">
+        <textarea rows="6" cols="60"></textarea>
+      </div>
+      <div class="form-row">
+        <button disabled class="submit comment-reply-submit">Post reply</button>
+        <button type="button" class="comment-reply-cancel">Cancel</button>
+      </div>
+    </form>
+  </div>
+  <div class="comment-replies">
+    <% comment.children.forEach(reply => { %>
+      <%- include('comment', { comment: reply, markdown: markdown, user: user }) %>
+    <% }) %>
   </div>
 </div>

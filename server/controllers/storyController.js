@@ -38,7 +38,7 @@ exports.viewStory = function viewStory(req, res) {
       path: 'comments',
       model: 'Comment',
       populate: {
-        path: 'user'
+        path: 'user children'
       }
     })
     .then(story => {
@@ -76,6 +76,7 @@ exports.postComment = function postComment(req, res) {
 
       comment.save().then(document => {
         story.comments.push(comment);
+        story.commentCount += 1;
         return story.save();
       }).then(document => {
         res.redirect(`/story/${req.params.storyId}`);

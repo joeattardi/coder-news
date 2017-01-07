@@ -7,6 +7,7 @@ const expressValidator = require('express-validator');
 const url = require('url');
 
 const Story = require('./models/Story');
+const commentController = require('./controllers/commentController');
 const storyController = require('./controllers/storyController');
 const userController = require('./controllers/userController');
 const ajaxController = require('./controllers/ajaxController');
@@ -77,8 +78,10 @@ app.get('/usernameExists', ajaxController.usernameExists);
 app.get('/extractTitle', ajaxController.extractTitle); 
 app.post('/story/:storyId/vote', ajaxController.voteStory);
 app.post('/comment/:commentId/vote', ajaxController.voteComment);
-app.post('/comment/:commentId', ajaxController.editComment);
-app.delete('/comment/:commentId', ajaxController.deleteComment);
+
+app.post('/comment/:commentId', commentController.editComment);
+app.post('/comment/:commentId/reply', commentController.replyToComment);
+app.delete('/comment/:commentId', commentController.deleteComment);
 
 app.get('/signup', userController.viewSignUpPage);
 app.post('/signup', userController.signup);

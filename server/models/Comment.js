@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
+const Story = require('./Story');
 
 const commentSchema = new mongoose.Schema({
   text: {
@@ -33,6 +34,10 @@ const commentSchema = new mongoose.Schema({
     default: 0
   },
   posted: Date,
+  parent: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comment'
+  },
   children: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Comment'
@@ -62,5 +67,27 @@ commentSchema.methods.getUserVote = function getUserStatus(user) {
 
   return '';
 }
+
+commentSchema.pre('find', function (next) {
+  this.populate('children user');
+  next();
+});
+
+commentSchema.pre('remove', function (next) {
+  this.populate('children story', () => {
+    this.story.comments = this.story.comments.filter(commentId => !commentId.equals(this._id));
+    this.story.commentCount -= 1;
+    this.story.save().then(() => {
+      const promises = [];
+      this.children.forEach(childComment => {
+        promises.push(childComment.remove());
+      });
+
+      Promise.all(promises).then(() => {
+        next();
+      });
+    });
+  });
+});
 
 module.exports = mongoose.model('Comment', commentSchema);

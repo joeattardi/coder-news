@@ -7,10 +7,10 @@ function vote($commentContainer, direction, removeClass, toggleClass) {
     method: 'POST',
     url: `/comment/${commentId}/vote?direction=${direction}`
   }).then(result => {
-    $commentContainer.find('.comment-votes')
+    $commentContainer.find('.comment-votes:first')
       .removeClass(removeClass)
       .toggleClass(toggleClass);
-    $commentContainer.find('.comment-vote-count').html(`${result.votes} ${result.votes === 1 ? 'point' : 'points'}`);
+    $commentContainer.find('.comment-vote-count:first').html(`${result.votes} ${result.votes === 1 ? 'point' : 'points'}`);
   });
 }
 
